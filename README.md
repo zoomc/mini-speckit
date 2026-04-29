@@ -1,5 +1,7 @@
 # mini-spec-kit
 
+[🇺🇸 English](README.md) | [🇨🇳 中文](README.zh-CN.md)
+
 **Spec-driven development for AI coding agents — lightweight, traceable, token-efficient.**
 
 `mini-spec-kit` is a minimal Spec-Driven Development framework designed for individual developers and small teams using AI coding agents. It enforces a structured 6-phase workflow that ensures stability, traceability, and quality — without the overhead of enterprise-grade tooling.
