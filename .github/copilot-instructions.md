@@ -1,17 +1,34 @@
 # Copilot Instructions
 
-Before editing code in this repository, read and follow:
+This project uses `.mini-speckit/` for spec-driven development. Before modifying code:
 
-1. `.mini-speckit/project-constraints.md`
-2. `.mini-speckit/project-spec.md`
-3. `.mini-speckit/modules/<module>/complement.md`
+1. Read `.mini-speckit/project-constraints.md`
+2. Read `.mini-speckit/project-spec.md`
+3. Read the target module's files in `.mini-speckit/modules/<module>/`
 
-For non-trivial changes, use this workflow:
+## Workflow
+
+Follow the 6-phase workflow for any non-trivial change:
 
 ```text
-Spec → Plan → Checklist → Align → Implement → Test
+Specify → Plan → Write Checklist → Analyze → Implement → Reconcile
 ```
 
-Do not write implementation code before `spec.md`, `plan.md`, and `checklist.md` are aligned.
+## Rules
 
-Keep changes minimal, module-scoped, and consistent with the project constraints.
+- **No alignment, no code**: `spec.md`, `plan.md`, `checklist.md` must be consistent before implementation.
+- **No pre-checked checklists**: All checklist items start as `[ ]`.
+- **Reconcile is mandatory**: After implementation, update spec files to match code.
+- **Requirement IDs**: Every requirement in `spec.md` must have a `<!-- REQ-XXX -->` marker.
+- **Verification commands**: Every checklist item must have an exact command to run.
+
+## Phase Gates
+
+| Gate | Check |
+|------|-------|
+| Specify → Plan | `spec.md` has `## Requirements` |
+| Plan → Checklist | `plan.md` has `## Task List` |
+| Checklist → Analyze | No `[x]` in checklist |
+| Analyze → Implement | `## Analysis Report` passed |
+| Implement → Reconcile | Build/test passes |
+| Reconcile → Done | All `[x]`, spec matches code |

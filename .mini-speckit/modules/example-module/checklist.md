@@ -1,20 +1,48 @@
 # Example Module Checklist
 
-## Critical Functionality
+> All items start as `[ ]`. Never pre-check. Implementation and verification are separate steps.
 
-- [ ] When input matches the spec, the module returns the expected output.
-- [ ] When input is missing, invalid, or out of bounds, the module returns a clear error.
-- [ ] The module does not access other modules' private implementations.
-- [ ] The module's external API maintains backward compatibility unless the spec explicitly states a breaking change.
+## REQ-001: [Requirement Name]
 
-## Boundary Conditions
+**Implementation**:
+- [ ] [specific code artifact that must exist]
 
-- [ ] Empty input, minimum input, and maximum input behaviors are well-defined.
-- [ ] Repeated or concurrent calls do not break state consistency.
-- [ ] External dependency failures have traceable error paths.
+**Verification**:
+- [ ] `[exact command to run]` returns expected result
+- [ ] `[exact test command]` passes
 
-## Verification Requirements
+**Verified on**: ___
+**Verified by**: ___
 
-- [ ] Prioritize running tests directly related to this module.
-- [ ] When no related tests exist, perform the minimum viable build, type check, or manual verification.
-- [ ] The final report lists verified items, unverified items, and blocking reasons.
+## REQ-002: [Requirement Name]
+
+**Implementation**:
+- [ ] [specific code artifact that must exist]
+
+**Verification**:
+- [ ] `[exact command to run]` returns expected result
+- [ ] `[exact test command]` passes
+
+**Verified on**: ___
+**Verified by**: ___
+
+## Regression
+
+- [ ] `[go build ./...]` passes
+- [ ] `[go test ./internal/news/...]` passes
+- [ ] No unrelated files changed
+
+**Verified on**: ___
+**Verified by**: ___
+
+---
+
+## Checklist Rules
+
+1. Every item starts as `[ ]` — never pre-check
+2. Every requirement section maps to a `REQ-XXX` ID from `spec.md`
+3. **Implementation** items describe WHAT must exist
+4. **Verification** items describe HOW to verify (exact commands)
+5. **Regression** items verify nothing else broke
+6. Check off items only during Reconcile phase
+7. Record verification date and who verified

@@ -5,47 +5,70 @@
 This module must follow:
 
 ```text
-Spec → Plan → Checklist → Align → Implement → Test
+Specify → Plan → Write Checklist → Analyze → Implement → Reconcile
 ```
 
-## Spec
+## Specify
 
-- Clarify the module's pattern, responsibilities, boundaries, and non-goals.
-- If user requirements conflict with module boundaries, update the spec or request confirmation first.
-- Do not enter implementation until the spec is clear.
+- Read existing `spec.md` to understand current state.
+- For new features: add requirement sections with `<!-- REQ-XXX -->` markers.
+- For changes: mark old requirements `[DEPRECATED]`, add new sections with `[NEW]` or `[CHANGED]`.
+- For bug fixes: no spec change needed (or add `## Known Issues`).
+- **Exit criteria**: `spec.md` has `## Requirements` section with requirement IDs.
 
 ## Plan
 
-- Break implementation into executable, verifiable, minimally scoped steps.
-- The plan must state which files or capability boundaries will be touched.
-- If the plan conflicts with the spec, fix the plan or spec first.
+- Read `spec.md` requirements to understand what needs to change.
+- Fill in `## Change Type` in `plan.md`.
+- Write `## Task List` with: requirement ID, files, dependencies, success criteria.
+- Each task must have a clear success criterion (exact test command or verification).
+- **Exit criteria**: `plan.md` has `## Task List` with all tasks linked to requirement IDs.
 
-## Checklist
+## Write Checklist
 
-- The checklist must cover critical functionality, boundary conditions, and failure paths.
-- The checklist must be able to verify the key steps in the plan.
-- If the checklist is missing, fill it in first.
+- Read `plan.md` task list to understand what to verify.
+- Create checklist items grouped by requirement ID.
+- Each requirement section has:
+  - **Implementation** items: what code artifacts must exist
+  - **Verification** items: exact commands to run
+  - **Regression** items: existing tests that must still pass
+- All items start as `[ ]` — never pre-check.
+- **Exit criteria**: `checklist.md` has no `[x]` items, all have `**Verification**:` blocks.
 
-## Align
+## Analyze
 
-- Check whether `spec.md`, `plan.md`, `checklist.md` are mutually consistent.
-- If inconsistencies are found, only the spec, plan, or checklist may be modified.
-- During Align: **no code**, no implementation file changes, no unrelated refactoring.
-- After alignment is complete, state explicitly in the execution notes: spec, plan, and checklist are consistent.
+- Read `spec.md`, `plan.md`, `checklist.md` — do NOT modify any files.
+- Check consistency:
+  - Every requirement has a task
+  - Every task has a checklist item
+  - Every verification command points to correct files
+  - No terminology drift
+  - No coverage gaps
+- Write `## Analysis Report` in `plan.md` with check results.
+- If CRITICAL issues found: stop, fix spec/plan/checklist, re-analyze.
+- **Exit criteria**: `plan.md` has `## Analysis Report` with no CRITICAL issues.
 
 ## Implement
 
-- Code may only be modified after Align is complete.
-- Implement strictly within the minimal scope defined in `plan.md`.
-- Do not implement anything explicitly excluded by `spec.md`.
-- If new conflicts are discovered, stop implementation and return to Align.
+- Read `plan.md` task list and `checklist.md` verification items.
+- Make code changes strictly per the plan.
+- Do NOT modify spec/plan/checklist files during implementation.
+- If new conflicts discovered, stop and return to Analyze.
+- Run build/test to verify code compiles and passes.
+- **Exit criteria**: Build/test passes.
 
-## Test
+## Reconcile
 
-- Perform minimal relevant verification per `checklist.md`.
-- Distinguish between code failures, environment failures, permission failures, and external service failures.
-- The final report must list changed files, verification commands, results, and remaining risks.
+- Run each verification command from `checklist.md`.
+- Check off completed items with `[x]` and record verification date.
+- Re-read `spec.md`:
+  - Remove `## Known Issues` if bug fix is complete
+  - Verify `[NEW]`/`[CHANGED]` requirements are implemented
+- Re-read `plan.md`:
+  - Remove `## Current Task` section if present
+- Update `changelog.md` with change description.
+- **Exit criteria**: All checklist items `[x]`, `spec.md` matches code, `changelog.md` updated.
 
 ## Core Principle
 
-**No alignment, no code.**
+**No alignment, no code. No reconcile, no done.**

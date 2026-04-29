@@ -2,7 +2,15 @@
 
 ## Project Goal
 
-`mini-speckit` provides a minimal, copyable AI coding spec skeleton for any project, enabling Hermes, Codex, or other executors to complete spec alignment before writing code — reducing context drift, scope creep, and premature implementation risks.
+`mini-speckit` provides a minimal, copyable Spec-Driven Development base template for any project, enabling Hermes, Codex, or other executors to complete spec alignment before writing code — reducing context drift, scope creep, and premature implementation risks.
+
+## Core Principles
+
+- **Spec is the source of truth**: Code serves specs, not the other way around.
+- **Artifact-driven flow**: Each phase produces artifacts that the next phase reads. No artifact → next phase cannot start.
+- **No pre-checked checklists**: All checklist items start as `[ ]`. Implementation and verification are separate steps.
+- **Change traceability**: Every change is recorded in `changelog.md` with requirement IDs.
+- **Reconcile is mandatory**: After implementation, spec files must be updated to match the actual code.
 
 ## Module Breakdown
 
@@ -23,15 +31,19 @@ Read project-spec.md
   ↓
 Select modules/<module>/complement.md
   ↓
-Spec → Plan → Checklist
+Phase 1: Specify (update spec.md)
   ↓
-Align documents only
+Phase 2: Plan (update plan.md with Task List)
   ↓
-Implement code
+Phase 3: Write Checklist (create checklist.md with verification commands)
   ↓
-Test by checklist
+Phase 4: Analyze (consistency check, write Analysis Report)
   ↓
-Report result and gaps
+Phase 5: Implement (code changes only)
+  ↓
+Phase 6: Reconcile (verify checklist, update spec.md, write changelog)
+  ↓
+Done
 ```
 
 ## Directory Structure
@@ -42,15 +54,25 @@ Report result and gaps
   project-spec.md
   modules/
     <module>/
-      spec.md
-      plan.md
-      checklist.md
-      complement.md
+      spec.md          # Current requirements state
+      plan.md          # Implementation plan + Phase Status + Analysis Report
+      checklist.md     # Verification items with requirement IDs and commands
+      complement.md    # Module responsibilities and interfaces
+      changelog.md     # Change history
 .github/
   copilot-instructions.md
 scripts/
   init-mini-speckit.sh
 ```
+
+## Change Types
+
+| Type | spec.md | changelog.md |
+|------|---------|-------------|
+| Bug Fix | No change (or add `## Known Issues`) | Record fix |
+| Requirement Change | Mark `[CHANGED]` / `[DEPRECATED]` | Record change |
+| Enhancement | Add `[NEW]` section | Record addition |
+| Refactoring | No change (behavior preserved) | Record refactor |
 
 ## Usage Boundaries
 

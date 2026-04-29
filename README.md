@@ -6,17 +6,37 @@ It does not copy the official Spec Kit implementation — only the core idea: al
 
 ## Core Principles
 
-- **Define first, implement later**: Before any code change, clarify project constraints, module specs, implementation plan, and checkpoints.
-- **No alignment, no code**: `spec.md`, `plan.md`, `checklist.md` must be consistent; when inconsistent, fix docs only — no code.
-- **Files are context**: Key decisions live in `.mini-speckit/`, reducing reliance on chat history.
-- **Copy to use**: Place `.mini-speckit/` and `.github/copilot-instructions.md` into any project root, and AI tools read the same constraints.
+- **Spec is the source of truth**: Code serves specs, not the other way around.
+- **Artifact-driven flow**: Each phase produces artifacts that the next phase reads. No artifact → next phase cannot start.
+- **No pre-checked checklists**: All checklist items start as `[ ]`. Implementation and verification are separate steps.
+- **Change traceability**: Every change is recorded in `changelog.md` with requirement IDs.
+- **Reconcile is mandatory**: After implementation, spec files must be updated to match the actual code.
 
 ## Workflow
 
-1. Read `.mini-speckit/project-constraints.md`
-2. Read `.mini-speckit/project-spec.md`
-3. Select a module and read `.mini-speckit/modules/<module>/complement.md`
-4. Follow the module workflow: `Spec → Plan → Checklist → Align → Implement → Test`
+```text
+Specify → Plan → Write Checklist → Analyze → Implement → Reconcile
+```
+
+| Phase | What | Output |
+|-------|------|--------|
+| **Specify** | Update `spec.md` with requirements | `spec.md` with requirement IDs |
+| **Plan** | Write implementation plan + task list | `plan.md` with `## Task List` |
+| **Write Checklist** | Create verification items with commands | `checklist.md` with `[ ]` items |
+| **Analyze** | Consistency check (spec/plan/checklist) | `plan.md` with `## Analysis Report` |
+| **Implement** | Code changes per plan | Code + build/test pass |
+| **Reconcile** | Verify checklist + update spec | `checklist.md` `[x]` + `changelog.md` |
+
+## Phase Gates
+
+| Gate | Check | Fail Action |
+|------|-------|-------------|
+| Specify → Plan | `spec.md` has `## Requirements` | Stop, complete spec |
+| Plan → Checklist | `plan.md` has `## Task List` | Stop, complete plan |
+| Checklist → Analyze | No `[x]` in checklist, all have verification commands | Stop, fix checklist |
+| Analyze → Implement | `## Analysis Report` with no CRITICAL issues | Stop, fix inconsistencies |
+| Implement → Reconcile | Build/test passes | Stop, fix code |
+| Reconcile → Done | All `[x]`, spec matches code | Stop, complete reconciliation |
 
 ## Initialize into Another Project
 
@@ -40,15 +60,25 @@ mini-speckit/
     project-spec.md
     modules/
       example-module/
-        spec.md
-        plan.md
-        checklist.md
-        complement.md
+        spec.md          # Current requirements state
+        plan.md          # Implementation plan + Phase Status + Analysis Report
+        checklist.md     # Verification items with requirement IDs and commands
+        complement.md    # Module responsibilities and interfaces
+        changelog.md     # Change history
   .github/
     copilot-instructions.md
   scripts/
     init-mini-speckit.sh
 ```
+
+## Change Types
+
+| Type | spec.md | changelog.md |
+|------|---------|-------------|
+| Bug Fix | No change (or add `## Known Issues`) | Record fix |
+| Requirement Change | Mark `[CHANGED]` / `[DEPRECATED]` | Record change |
+| Enhancement | Add `[NEW]` section | Record addition |
+| Refactoring | No change (behavior preserved) | Record refactor |
 
 ## Relationship with Official Spec Kit
 
