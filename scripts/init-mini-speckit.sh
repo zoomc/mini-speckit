@@ -35,5 +35,20 @@ if [ -d "$TEMPLATE_DIR/.claude/commands" ]; then
   echo "Copied Claude slash commands to .claude/commands/"
 fi
 
+# Copy Codex skills
+if [ -d "$TEMPLATE_DIR/.agents/skills" ]; then
+  mkdir -p "$TARGET_DIR/.agents/skills"
+  cp -R "$TEMPLATE_DIR/.agents/skills/"* "$TARGET_DIR/.agents/skills/"
+  echo "Copied Codex skills to .agents/skills/"
+fi
+
+# Generate AGENTS.md from template (for Codex)
+if [ ! -f "$TARGET_DIR/AGENTS.md" ]; then
+  sed "s/{{PROJECT_NAME}}/$PROJECT_NAME/g" "$TEMPLATE_DIR/templates/AGENTS.md" > "$TARGET_DIR/AGENTS.md"
+  echo "Created AGENTS.md with project name: $PROJECT_NAME"
+else
+  echo "AGENTS.md already exists, skipping."
+fi
+
 echo "mini-spec-kit initialized in: $TARGET_DIR"
 echo "Next: read .mini-spec-kit/project-constraints.md before editing code."
