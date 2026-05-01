@@ -10,6 +10,15 @@
 - Scope of changes must be minimized; only touch files relevant to the current task.
 - When specs are unclear, plans conflict, or checkpoints are missing, fill in the docs first — do not jump to code.
 
+## Coding Principles
+
+> Derived from Andrej Karpathy's LLM coding guidelines. Enforced during every Implement phase.
+
+- **Think Before Coding**: State assumptions explicitly. If uncertain, stop and ask. If multiple interpretations exist, present them — don't pick silently.
+- **Simplicity First**: Write minimum code that solves the problem. No speculative features, no unnecessary abstractions, no "flexibility" that wasn't requested. If you write 200 lines and it could be 50, rewrite it.
+- **Surgical Changes**: Touch only what the plan specifies. Do not refactor adjacent code. Match existing style. Clean up only orphans YOUR changes created — not pre-existing dead code. Every changed line must trace to the user's request.
+- **Goal-Driven Execution**: Transform tasks into verifiable goals before coding. For multi-step tasks, state a brief plan with verify steps.
+
 ## Forbidden Actions
 
 - Do not skip `project-constraints.md` and modify code directly.
