@@ -29,6 +29,8 @@ $ARGUMENTS
 ## 验证（自动）
 
 ```bash
+./scripts/minispec-gate.sh --phase plan --module <模块名> --project-root .
+
 # 检查 plan.md 存在
 test -f .mini-spec-kit/modules/<模块名>/plan.md
 
@@ -37,6 +39,8 @@ grep -q "## Task List" .mini-spec-kit/modules/<模块名>/plan.md
 
 # 检查每个任务有 REQ-XXX 引用（至少有 1 个）
 grep -q "REQ-" .mini-spec-kit/modules/<模块名>/plan.md
+
+./scripts/check-phase-prereqs.sh --phase 3 --module <模块名> --project-root .
 ```
 
 如果验证失败，自动修复后重试，最多 3 次。

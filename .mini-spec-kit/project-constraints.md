@@ -5,7 +5,7 @@
 ## AI Coding Behavior Rules
 
 - Understand constraints, goals, and module boundaries before proposing or updating an implementation plan.
-- Non-trivial changes must follow the target module's 6-phase workflow: `Specify → Plan → Write Checklist → Analyze → Implement → Reconcile`.
+- Any change that produces a git diff must follow the target module's 6-phase workflow: `Specify → Plan → Write Checklist → Analyze → Implement → Reconcile`. Tiny tasks may use short artifacts, but they do not skip phases.
 - All key requirements, trade-offs, boundaries, and verification points must be written to files — no reliance on chat context.
 - Scope of changes must be minimized; only touch files relevant to the current task.
 - When specs are unclear, plans conflict, or checkpoints are missing, fill in the docs first — do not jump to code.
@@ -47,8 +47,9 @@
 ## Execution Thresholds
 
 - Before Implement: only allowed to modify `spec.md`, `plan.md`, `checklist.md`, `complement.md`, `changelog.md` and other spec files.
-- After Analyze passes: allowed to enter Implement, and must execute with minimal scope per `plan.md`.
-- After Implement: must run verification per `checklist.md`, check off completed items, and update `changelog.md`.
+- Before Implement: `checklist.md` must exist, contain at least one unchecked `- [ ]` item, and contain no checked `- [x]` items.
+- After Analyze passes and the gate allows implementation: allowed to enter Implement, and must execute with minimal scope per `plan.md`.
+- After Implement: must run verification per `checklist.md`, record results in `verify.log`, check off completed items only during Reconcile, and update `changelog.md` plus `gate.md`/`gate-history.log` when present.
 
 ## 6-Phase Workflow
 
@@ -62,7 +63,14 @@ Specify → Plan → Write Checklist → Analyze → Implement → Reconcile
 |------|-------|-------------|
 | Specify → Plan | `spec.md` has `## Requirements` or `## Change Request` | Stop, complete spec first |
 | Plan → Checklist | `plan.md` has `## Task List` | Stop, complete plan first |
-| Checklist → Analyze | `checklist.md` has no `[x]` items, all have `**Verification**:` blocks | Stop, fix checklist |
-| Analyze → Implement | `plan.md` has `## Analysis Report` with no CRITICAL issues | Stop, fix inconsistencies |
-| Implement → Reconcile | Build/test passes | Stop, fix code |
-| Reconcile → Done | All checklist items `[x]`, `spec.md` matches code | Stop, complete reconciliation |
+| Checklist → Analyze | `checklist.md` exists, has checklist items, and all have `**Verification**:` blocks | Stop, fix checklist |
+| Analyze → Implement | `plan.md` has `## Analysis Report` with PASS/no CRITICAL issues; `checklist.md` has unchecked `[ ]` items and no `[x]`; `gate.md` allows Implement when present | Stop, fix inconsistencies |
+| Implement → Reconcile | Build/test passes and git diff exists | Stop, fix code |
+| Reconcile → Done | All checklist items `[x]`, `spec.md` matches code, PASS Analysis Report exists, `changelog.md` and verification logs updated, final gate passes | Stop, complete reconciliation |
+
+## Gate Commands
+
+- Prefer `scripts/minispec-gate.sh --phase <phase> --module <module> --project-root .` for hard gates.
+- `scripts/check-phase-prereqs.sh --phase <1-6|phase-name> --module <module> --project-root .` is the compatibility prerequisite checker.
+- Both scripts inspect `.mini-spec-kit/modules/<module>`.
+- A module is complete only when `scripts/minispec-gate.sh --phase final --module <module> --project-root .` exits 0.

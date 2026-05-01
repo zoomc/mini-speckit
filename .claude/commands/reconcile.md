@@ -22,7 +22,9 @@ $ARGUMENTS
 2. 运行每个 `- [ ]` 项的 `### Verification` 命令
 3. 验证通过的项，将 `- [ ]` 改为 `- [x]`
 4. 检查 spec.md 是否与实际代码一致，如有偏差则更新 spec.md
-5. 创建或更新 `.mini-spec-kit/modules/<模块名>/changelog.md`：
+5. 更新 `.mini-spec-kit/modules/<模块名>/verify.log` 和 `gate-history.log`（如存在）
+6. 更新 `.mini-spec-kit/modules/<模块名>/gate.md` 的 Final Result（如存在）
+7. 创建或更新 `.mini-spec-kit/modules/<模块名>/changelog.md`：
    - 记录本次变更
    - 关联 REQ-XXX ID
    - 记录变更类型和影响
@@ -35,6 +37,8 @@ $ARGUMENTS
 
 # 检查 changelog.md 存在
 test -f .mini-spec-kit/modules/<模块名>/changelog.md
+
+./scripts/minispec-gate.sh --phase final --module <模块名> --project-root .
 ```
 
 如果验证失败（有未通过的验证项），列出失败项并尝试修复，最多 3 次。

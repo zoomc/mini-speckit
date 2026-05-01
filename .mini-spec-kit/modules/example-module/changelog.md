@@ -1,6 +1,7 @@
 # Example Module Changelog
 
 > Record all changes here. This file is for human reference — agents read `spec.md` for current state.
+> Status: pre-implementation open example. Placeholder entries do not indicate final completion.
 
 ## YYYY-MM-DD: [Change Title]
 

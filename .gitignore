@@ -6,5 +6,7 @@ coverage/
 .env
 .env.*
 *.log
+!.mini-spec-kit/modules/*/verify.log
+!.mini-spec-kit/modules/*/gate-history.log
 .idea/
 .vscode/

@@ -13,17 +13,18 @@ $ARGUMENTS
 ## 前置检查
 
 1. 检查 `.mini-spec-kit/modules/<模块名>/checklist.md` 存在
-2. 检查所有 `- [ ]` 项是否已全部变为 `- [x]`（如果有未完成项，列出并询问用户是否继续）
+2. 检查 checklist 至少有一个 `- [ ]` 项，且没有任何 `- [x]` 项
 3. 检查 `.mini-spec-kit/modules/<模块名>/plan.md` 存在且有 `## Analysis Report`
 4. 如果 Analysis Report 包含 CRITICAL 问题，STOP 并提示先运行 `/analyze` 修复
-5. 如果前置检查失败，报错并提示先运行前序命令
+5. 运行 `./scripts/minispec-gate.sh --phase before-implement --module <模块名> --project-root .`
+6. 如果前置检查失败，报错并提示先运行前序命令
 
 ## 执行
 
 1. 读取 `.mini-spec-kit/modules/<模块名>/plan.md` 的 Task List
 2. 按 Task List 顺序执行代码修改
 3. 每完成一个任务，运行对应的 build/test 验证
-4. 不允许修改 spec.md、plan.md、checklist.md（这些在 Reconcile 阶段处理）
+4. 不允许勾选 checklist（这些在 Reconcile 阶段处理）
 
 ## 验证（自动）
 
@@ -35,6 +36,8 @@ $ARGUMENTS
 
 # 检查修改的文件是否在 plan.md 的 Task List 中
 # （通过 git diff 检查修改了哪些文件，与 plan.md 中的文件路径对比）
+
+./scripts/minispec-gate.sh --phase after-implement --module <模块名> --project-root .
 ```
 
 如果 build/test 失败，自动修复后重试，最多 3 次。

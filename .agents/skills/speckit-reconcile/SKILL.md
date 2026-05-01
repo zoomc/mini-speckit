@@ -1,3 +1,9 @@
+---
+name: speckit-reconcile
+description: Verify and close the checklist after implementation
+version: 0.1.0
+---
+
 # speckit-reconcile
 
 ## 触发条件

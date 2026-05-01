@@ -1,8 +1,10 @@
 # Example Module Spec
 
+> Status: pre-implementation open example. This module demonstrates artifact shape only and is not final-complete.
+
 ## Pattern
 
-The example module demonstrates how each business module should describe its spec, responsibilities, boundaries, and non-goals. After copying the template to an actual project, rename `example-module` to the real module name.
+The example module demonstrates how each business module should describe its spec, responsibilities, boundaries, and non-goals. After copying the template to an actual project, rename `example-module` to the real module name and complete the full workflow before treating it as done.
 
 ## Requirements
 

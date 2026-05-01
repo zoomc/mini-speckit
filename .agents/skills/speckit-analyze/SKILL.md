@@ -1,3 +1,9 @@
+---
+name: speckit-analyze
+description: Run consistency checks across spec, plan, and checklist
+version: 0.1.0
+---
+
 # speckit-analyze
 
 ## 触发条件

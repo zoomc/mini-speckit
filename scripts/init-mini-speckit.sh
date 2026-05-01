@@ -15,9 +15,33 @@ if [ ! -d "$TARGET_DIR" ]; then
   exit 1
 fi
 
+require_source() {
+  if [ ! -e "$TEMPLATE_DIR/$1" ]; then
+    echo "Required mini-spec-kit source is missing: $TEMPLATE_DIR/$1" >&2
+    exit 1
+  fi
+}
+
+require_source ".mini-spec-kit/project-constraints.md"
+require_source ".mini-spec-kit/project-spec.md"
+require_source ".github/copilot-instructions.md"
+require_source ".claude/commands/specify.md"
+require_source ".agents/skills/speckit-specify/SKILL.md"
+require_source "templates/CLAUDE.md"
+require_source "templates/AGENTS.md"
+require_source "scripts/check-phase-prereqs.sh"
+require_source "scripts/minispec-gate.sh"
+
 mkdir -p "$TARGET_DIR/.github"
 cp -R "$TEMPLATE_DIR/.mini-spec-kit" "$TARGET_DIR/.mini-spec-kit"
 cp "$TEMPLATE_DIR/.github/copilot-instructions.md" "$TARGET_DIR/.github/copilot-instructions.md"
+
+# Copy gate scripts used by agent commands and skills.
+mkdir -p "$TARGET_DIR/scripts"
+cp "$TEMPLATE_DIR/scripts/check-phase-prereqs.sh" "$TARGET_DIR/scripts/check-phase-prereqs.sh"
+cp "$TEMPLATE_DIR/scripts/minispec-gate.sh" "$TARGET_DIR/scripts/minispec-gate.sh"
+chmod +x "$TARGET_DIR/scripts/check-phase-prereqs.sh" "$TARGET_DIR/scripts/minispec-gate.sh"
+echo "Copied mini-spec-kit gate scripts to scripts/"
 
 # Generate CLAUDE.md from template (project name from directory basename)
 PROJECT_NAME="$(basename "$TARGET_DIR")"
@@ -51,4 +75,5 @@ else
 fi
 
 echo "mini-spec-kit initialized in: $TARGET_DIR"
+echo "Installed workflow context: .mini-spec-kit, .github/copilot-instructions.md, .claude/commands, .agents/skills, AGENTS.md, CLAUDE.md, scripts/check-phase-prereqs.sh, scripts/minispec-gate.sh"
 echo "Next: read .mini-spec-kit/project-constraints.md before editing code."

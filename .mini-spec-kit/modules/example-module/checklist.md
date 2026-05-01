@@ -1,6 +1,6 @@
 # Example Module Checklist
 
-> All items start as `[ ]`. Never pre-check. Implementation and verification are separate steps.
+> Status: pre-implementation open example. All items start as `[ ]`. Never pre-check. Implementation and verification are separate steps. This module intentionally does not pass the final gate.
 
 ## REQ-001: [Requirement Name]
 

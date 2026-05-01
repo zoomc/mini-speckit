@@ -17,7 +17,7 @@ $ARGUMENTS
 3. 检查 `.mini-spec-kit/modules/<模块名>/checklist.md` 存在
 4. 如果任何文件缺失，报错并提示先运行前序命令
 
-## 执行（只读，不修改 spec/plan/checklist）
+## 执行（不修改代码；只更新分析报告）
 
 1. 读取三份文件
 2. 检查一致性：
@@ -34,11 +34,15 @@ $ARGUMENTS
 ## 验证（自动）
 
 ```bash
+./scripts/minispec-gate.sh --phase analyze --module <模块名> --project-root .
+
 # 检查 plan.md 包含 Analysis Report
 grep -q "## Analysis Report" .mini-spec-kit/modules/<模块名>/plan.md
 
 # 检查报告中无 CRITICAL 问题
 ! grep -qi "CRITICAL" .mini-spec-kit/modules/<模块名>/plan.md
+
+./scripts/check-phase-prereqs.sh --phase 4 --module <模块名> --project-root .
 ```
 
 如果验证失败（有 CRITICAL 问题），必须先修复 spec/plan/checklist 中的问题，然后重新运行 analyze，最多 3 次。

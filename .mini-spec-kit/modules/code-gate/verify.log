@@ -1,0 +1,33 @@
+# Code Gate Verify Log
+
+2026-05-01T00:00:00+08:00 PASS bash -n scripts/*.sh passed.
+2026-05-01T00:00:00+08:00 PASS ./scripts/minispec-gate.sh --phase specify --module code-gate --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS ./scripts/minispec-gate.sh --phase plan --module code-gate --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS ./scripts/minispec-gate.sh --phase checklist --module code-gate --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS ./scripts/minispec-gate.sh --phase analyze --module code-gate --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS ./scripts/minispec-gate.sh --phase before-implement --module code-gate --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS ./scripts/minispec-gate.sh --phase after-implement --module code-gate --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS ./scripts/check-phase-prereqs.sh --phase 5 --module code-gate --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS ./scripts/check-phase-prereqs.sh --phase 2 --module example-module --project-root . exited 0.
+2026-05-01T00:00:00+08:00 PASS rg check for minispec-gate and check-phase-prereqs references in docs.
+2026-05-01T00:00:00+08:00 PASS YAML frontmatter added to all .agents/skills/speckit-*/SKILL.md files.
+2026-05-01 PASS Analyze/Implement gate refinement verification:
+- bash -n scripts/*.sh
+- minispec-gate analyze passes for reconciled code-gate checklist
+- check-phase-prereqs analyze passes for reconciled code-gate checklist
+- minispec-gate before-implement rejects reconciled code-gate checklist with [x]
+- command/docs scan confirms Analyze no longer runs before-implement
+
+2026-05-01 PASS Workflow enforcement optimization partial verification:
+- ./scripts/minispec-gate.sh --phase specify --module code-gate --project-root .
+- ./scripts/minispec-gate.sh --phase plan --module code-gate --project-root .
+- ./scripts/minispec-gate.sh --phase checklist --module code-gate --project-root .
+- ./scripts/minispec-gate.sh --phase analyze --module code-gate --project-root .
+- ./scripts/minispec-gate.sh --phase before-implement --module code-gate --project-root .
+- bash -n scripts/*.sh
+- ./scripts/minispec-gate.sh --phase after-implement --module code-gate --project-root .
+- README final-complete semantics grep
+- init-mini-speckit installs required context files and executable gate scripts
+- example-module is marked pre-implementation/open and final gate fails
+2026-05-01 FAIL skill gate documentation update: writes under .agents/skills fail with Operation not permitted.
+2026-05-01 FAIL ./scripts/minispec-gate.sh --phase final --module code-gate --project-root . blocked by unchecked REQ-009/REQ-013 checklist items.

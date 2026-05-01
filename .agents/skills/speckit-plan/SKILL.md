@@ -1,3 +1,9 @@
+---
+name: speckit-plan
+description: Create a technical implementation plan for a mini-spec-kit module
+version: 0.1.0
+---
+
 # speckit-plan
 
 ## 触发条件

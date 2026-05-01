@@ -30,6 +30,8 @@ $ARGUMENTS
 ## 验证（自动）
 
 ```bash
+./scripts/minispec-gate.sh --phase checklist --module <模块名> --project-root .
+
 # 检查 checklist.md 存在
 test -f .mini-spec-kit/modules/<模块名>/checklist.md
 
@@ -38,6 +40,8 @@ test -f .mini-spec-kit/modules/<模块名>/checklist.md
 
 # 检查每项有验证命令（grep Verification 块）
 grep -q "### Verification" .mini-spec-kit/modules/<模块名>/checklist.md
+
+./scripts/check-phase-prereqs.sh --phase 4 --module <模块名> --project-root .
 ```
 
 如果验证失败，自动修复后重试，最多 3 次。

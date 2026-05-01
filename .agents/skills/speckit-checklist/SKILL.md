@@ -1,3 +1,9 @@
+---
+name: speckit-checklist
+description: Create a verification checklist for a mini-spec-kit module
+version: 0.1.0
+---
+
 # speckit-checklist
 
 ## 触发条件

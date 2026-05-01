@@ -33,7 +33,7 @@ Specify → Plan → Write Checklist → Analyze → Implement → Reconcile
   - **Verification** items: exact commands to run
   - **Regression** items: existing tests that must still pass
 - All items start as `[ ]` — never pre-check.
-- **Exit criteria**: `checklist.md` has no `[x]` items, all have `**Verification**:` blocks.
+- **Exit criteria**: `checklist.md` has at least one `[ ]` item, no `[x]` items, and all have `**Verification**:` blocks.
 
 ## Analyze
 
@@ -55,19 +55,22 @@ Specify → Plan → Write Checklist → Analyze → Implement → Reconcile
 - Do NOT modify spec/plan/checklist files during implementation.
 - If new conflicts discovered, stop and return to Analyze.
 - Run build/test to verify code compiles and passes.
+- Do not check off `checklist.md` items during Implement.
 - **Exit criteria**: Build/test passes.
 
 ## Reconcile
 
 - Run each verification command from `checklist.md`.
 - Check off completed items with `[x]` and record verification date.
+- Record verification output in `verify.log` and gate transitions in `gate-history.log` when those files exist.
 - Re-read `spec.md`:
   - Remove `## Known Issues` if bug fix is complete
   - Verify `[NEW]`/`[CHANGED]` requirements are implemented
 - Re-read `plan.md`:
   - Remove `## Current Task` section if present
 - Update `changelog.md` with change description.
-- **Exit criteria**: All checklist items `[x]`, `spec.md` matches code, `changelog.md` updated.
+- Update `gate.md` final status when present.
+- **Exit criteria**: All checklist items `[x]`, `spec.md` matches code, `changelog.md` and logs updated.
 
 ## Core Principle
 

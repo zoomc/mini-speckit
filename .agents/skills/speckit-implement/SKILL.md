@@ -1,3 +1,9 @@
+---
+name: speckit-implement
+description: Implement code changes according to a mini-spec-kit plan
+version: 0.1.0
+---
+
 # speckit-implement
 
 ## 触发条件

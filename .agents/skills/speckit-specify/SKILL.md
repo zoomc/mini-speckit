@@ -1,3 +1,9 @@
+---
+name: speckit-specify
+description: Create or update module specifications for mini-spec-kit
+version: 0.1.0
+---
+
 # speckit-specify
 
 ## 触发条件

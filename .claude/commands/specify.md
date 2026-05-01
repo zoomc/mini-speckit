@@ -30,6 +30,8 @@ $ARGUMENTS
 ## 验证（自动）
 
 ```bash
+./scripts/minispec-gate.sh --phase specify --module <模块名> --project-root .
+
 # 检查 spec.md 存在
 test -f .mini-spec-kit/modules/<模块名>/spec.md
 
@@ -38,6 +40,8 @@ grep -q "## Requirements" .mini-spec-kit/modules/<模块名>/spec.md
 
 # 检查至少有 1 个 REQ-XXX
 grep -q "REQ-" .mini-spec-kit/modules/<模块名>/spec.md
+
+./scripts/check-phase-prereqs.sh --phase 2 --module <模块名> --project-root .
 ```
 
 如果验证失败，自动修复后重试，最多 3 次。

@@ -1,5 +1,7 @@
 # Example Module Plan
 
+> Status: pre-implementation open example. The placeholders below are intentionally incomplete and this module is not final-complete.
+
 ## Phase Status
 
 > Update this section at each phase transition. Next phase cannot start until previous phase is `[x]`.
@@ -9,7 +11,7 @@
 - [ ] Write Checklist: `checklist.md` generated with `[ ]` items and `**Verification**:` blocks
 - [ ] Analyze: `plan.md` has `## Analysis Report` with consistency check
 - [ ] Implement: Build/test passes
-- [ ] Reconcile: All checklist items `[x]`, `spec.md` matches code, `changelog.md` updated
+- [ ] Reconcile: All checklist items `[x]`, `spec.md` matches code, `changelog.md` updated, final gate passes
 
 ## Change Type
 
